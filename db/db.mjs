@@ -1,20 +1,21 @@
 // db.mjs
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
 const connectionString = process.env.mongoURI || "";
-const client = new MongoClient(connectionString, {
-   useNewUrlParser: true, 
-   useUnifiedTopology: true,
-  });
 
-async function connectToDatabase(callback) {
+async function connectToDatabase() {
   try {
-    await client.connect();
+    await mongoose.connect(connectionString, {
+      useNewUrlParser: true, 
+      useUnifiedTopology: true,
+      dbName: 'sample_training' // Specify the database name
+   
+     });
     console.log("Connected to MongoDB");
-    callback(null, client.db("sample_training"));
+    return mongoose.Connection;
   } catch (e) {
     console.error("Error connecting to MongoDB:", e);
-    callback(e);
+    //callback(e);
   }
 }
 

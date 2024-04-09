@@ -7,8 +7,8 @@ const applicationSchema = new mongoose.Schema({
   email: { type: String, required: true },
   gender: { type: String, required: true },
   yearsOfExperience :{ type: Number, required: false },
-  //resume:{ type: Buffer, required: false },
-  // Add more fields as per your app requirements
+  otherDetails :{ type: String, required: false },
+  resume:{ type: Buffer, required: false },
 });
 const Application = mongoose.model('Application', applicationSchema);
 
