@@ -19,14 +19,26 @@ app.use(function (err, _req, res, next) {
   res.status(500).send('Something broke!');
 });
 // perform a database connection when the server starts
-connectToDatabase(function (err) {
-  if (err) {
-    console.error('No connection',err);
-    process.exit();
-  }
+// connectToDatabase(function (err) {
+//   if (err) {
+//     console.error('No connection',err);
+//     process.exit();
+//   }
 
-  // start the Express server
-  app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
+//   // start the Express server
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on port: ${PORT}`);
+//   });
+// });
+// Connect to the MongoDB database
+connectToDatabase()
+  .then((db) => {
+    // Start your Express server
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error connecting to database:', error);
+    process.exit(1); // Exit the process if unable to connect to the database
   });
-});
